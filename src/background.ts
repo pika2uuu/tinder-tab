@@ -5,7 +5,8 @@ chrome.action.onClicked.addListener(() => {
 chrome.tabs.onUpdated.addListener((tabId: number, changeInfo: chrome.tabs.TabChangeInfo, tab : chrome.tabs.Tab) => {
   if (changeInfo.status === "complete" && tab.width && tab.height) {
     const aspect = tab.width / tab.height; // カスタムページでスクショ一覧を表示するときアスペクト比にそってサイズを決めることで見栄えよく表示する
-    const tabData = { id: tabId, title: tab.title, url: tab.url, favicon: tab.favIconUrl, aspect: aspect, screenShot: "" }; // この変数をcaptureVisibleTabコールバック内で定義したら保存できないキーが出てくる。非同期関数が原因？
+    const currentDate = new Date().toJSON();
+    const tabData = { id: tabId, title: tab.title, url: tab.url, favicon: tab.favIconUrl, aspect: aspect, lastseen: currentDate, screenShot: "" }; // この変数をcaptureVisibleTabコールバック内で定義したら保存できないキーが出てくる。非同期関数が原因？
 
     // 新しいタブを開いたときにスクショを撮ると発生するエラー対策のアーリーリターン エラー名:Unchecked runtime.lastError: The 'activeTab' permission is not in effect because this extension has not been in invoked.
     if (!tab.url || !(tab.url.startsWith("http://") || tab.url.startsWith("https://"))) {
