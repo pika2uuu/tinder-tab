@@ -6,7 +6,8 @@ chrome.tabs.onUpdated.addListener((tabId: number, changeInfo: chrome.tabs.TabCha
   if (changeInfo.status === "complete" && tab.width && tab.height) {
     const aspect = tab.width / tab.height; // カスタムページでスクショ一覧を表示するときアスペクト比にそってサイズを決めることで見栄えよく表示する
     const currentDate = new Date().toJSON();
-    const tabData = { id: tabId, title: tab.title, url: tab.url, favicon: tab.favIconUrl, aspect: aspect, lastseen: currentDate, screenShot: "" }; // この変数をcaptureVisibleTabコールバック内で定義したら保存できないキーが出てくる。非同期関数が原因？
+    // tabDataをcaptureVisibleTabコールバック内で定義したら保存できないキーが出てくる。非同期関数が原因？
+    const tabData = { id: tabId, title: tab.title, url: tab.url, favicon: tab.favIconUrl, aspect: aspect, lastseen: currentDate, screenShot: "" };
 
     // 新しいタブを開いたときにスクショを撮ると発生するエラー対策のアーリーリターン エラー名:Unchecked runtime.lastError: The 'activeTab' permission is not in effect because this extension has not been in invoked.
     if (!tab.url || !(tab.url.startsWith("http://") || tab.url.startsWith("https://"))) {
@@ -15,7 +16,14 @@ chrome.tabs.onUpdated.addListener((tabId: number, changeInfo: chrome.tabs.TabCha
 
     chrome.tabs.captureVisibleTab((imageURl) => {
       tabData.screenShot = imageURl;
-      chrome.storage.local.set({ [tabId]: tabData });
+      // グループ化してないタブの一覧に追加する 
+      // タブIDをキーにしているので同じタブでリンク移動したら上書きすることで最新情報を保てる
+      // "ungrouped"{ (tabのID): { ...(tabの情報)...}, (tabのID): { ...(tabの情報)... } }
+      chrome.storage.local.get("ungrouped", (result) => {
+        let currentTabs = result.ungrouped ?? {};
+        currentTabs[tabId] = tabData;
+        chrome.storage.local.set({ ungrouped: currentTabs });
+      });
       console.log(`[${tab.id}] をスクショしました`);
     });
   }
