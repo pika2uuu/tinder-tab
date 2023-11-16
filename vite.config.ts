@@ -7,8 +7,8 @@ export default defineConfig({
   build: {
     rollupOptions: {
       input: {
-        popup: "src/popup/popup.html",
         options: "src/options/options.html",
+        tinder: "src/tinder/tinder.html"
       },
     },
   },
