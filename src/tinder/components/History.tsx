@@ -1,4 +1,4 @@
-import { Table, Thead, Tbody, Tfoot, Tr, Th, Td, TableCaption, TableContainer } from "@chakra-ui/react";
+import { VStack } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import HistoryItem from "./HistoryItem";
 
@@ -29,9 +29,11 @@ export default function History() {
 
   return (
     <>
-      {Object.values(tabsData).map((tabData) => (
-        <HistoryItem tabData={tabData} key={tabData.id} />
-      ))}
+      <VStack spacing='3' align='start'>
+        {Object.values(tabsData).map((tabData) => (
+          <HistoryItem tabData={tabData} key={tabData.id} />
+        ))}
+      </VStack>
     </>
   );
 }

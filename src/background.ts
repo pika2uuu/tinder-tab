@@ -32,6 +32,7 @@ chrome.tabs.onRemoved.addListener((tabId: number) => {
         console.log(`[${tabId}] を削除しました`);
       });
     } else {
+      // 拡張機能インストール前に開いてたタブだったり、http/https以外のタブを開いて閉じた場合は保存しないから削除もしない
       console.log(`[${tabId}] は存在しないため削除しませんでした`);
     }
   });

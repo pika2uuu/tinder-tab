@@ -5,6 +5,7 @@ import History from './components/History';
 function Tinder() {
   return (
     <>
+      
       <History />
     </>
   );

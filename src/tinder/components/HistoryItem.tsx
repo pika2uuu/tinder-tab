@@ -22,17 +22,17 @@ export default function HistoryItem({ tabData }: HistoryItemProps) {
   const fromNow = lastseen.fromNow();
   return (
     <>
-      <HStack spacing='24px'>
-        <Box w='30px'>
-          <Image src={tabData.favicon} borderRadius='full' boxSize='30px' fallbackSrc='https://via.placeholder.com/30' />
+      <HStack spacing='5px'>
+        <Box w='20px'>
+          <Image src={tabData.favicon} borderRadius='full' boxSize='20px' fallbackSrc='https://cdn-icons-png.flaticon.com/512/1011/1011322.png ' />
         </Box>
         <Box w='250px'>
-          <Link href={tabData.url} isExternal color='Gray'>
+          <Link href={tabData.url} isExternal color='#0000EE'>
             {tabData.title} <ExternalLinkIcon mx='2px' />
           </Link>
         </Box>
         <Box w='150px'>
-          <Text color='Gray'>{fromNow}</Text>
+          <Text>{fromNow}</Text>
         </Box>
       </HStack>
     </>
