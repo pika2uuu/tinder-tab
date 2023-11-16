@@ -1,7 +1,6 @@
-import { Box, HStack, Center, Text, Image, Link, Square } from "@chakra-ui/react";
+import { Box, HStack, Text, Image, Link } from "@chakra-ui/react";
 import { ExternalLinkIcon } from "@chakra-ui/icons";
 import * as moment from "moment-timezone";
-
 
 interface TabData {
   aspect: number;
@@ -16,8 +15,6 @@ interface TabData {
 interface HistoryItemProps {
   tabData: TabData;
 }
-
-
 
 export default function HistoryItem({ tabData }: HistoryItemProps) {
   const lastseen = moment(tabData.lastseen);
