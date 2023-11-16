@@ -8,9 +8,10 @@ chrome.tabs.onUpdated.addListener((tabId: number, changeInfo: chrome.tabs.TabCha
     const tabData = { id: tabId, title: tab.title, url: tab.url, favicon: tab.favIconUrl, aspect: aspect, screenShot: "" }; // この変数をcaptureVisibleTabコールバック内で定義したら保存できないキーが出てくる。非同期関数が原因？
 
     // 新しいタブを開いたときにスクショを撮ると発生するエラー対策のアーリーリターン エラー名:Unchecked runtime.lastError: The 'activeTab' permission is not in effect because this extension has not been in invoked.
-    if (tab.url === "chrome://newtab/") {
+    if (!tab.url || !(tab.url.startsWith("http://") || tab.url.startsWith("https://"))) {
       return;
     }
+
     chrome.tabs.captureVisibleTab((imageURl) => {
       tabData.screenShot = imageURl;
       chrome.storage.local.set({ [tabId]: tabData });
