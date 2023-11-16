@@ -1,5 +1,10 @@
 chrome.action.onClicked.addListener(() => {
   chrome.tabs.create({ url: "/src/tinder/tinder.html" }); //絶対パスだった
+  chrome.storage.local.get("ungrouped", (result) => {
+    const currentTime = Date.now();
+    chrome.storage.local.set({ [currentTime]: result.ungrouped });
+    chrome.storage.local.set({ "ungrouped": {} }); // remove()メソッドを使うとキーごとなくなってしまうので空オブジェクトをセットした
+  })
 });
 
 chrome.tabs.onUpdated.addListener((tabId: number, changeInfo: chrome.tabs.TabChangeInfo, tab : chrome.tabs.Tab) => {
