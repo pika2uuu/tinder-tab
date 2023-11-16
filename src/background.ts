@@ -1,10 +1,14 @@
 chrome.action.onClicked.addListener(() => {
-  chrome.tabs.create({ url: "/src/tinder/tinder.html" }); //絶対パスだった
   chrome.storage.local.get("ungrouped", (result) => {
     const currentTime = Date.now();
-    chrome.storage.local.set({ [currentTime]: result.ungrouped });
-    chrome.storage.local.set({ "ungrouped": {} }); // remove()メソッドを使うとキーごとなくなってしまうので空オブジェクトをセットした
-  })
+    // タブが0のときは保存しない
+    const numTabs = Object.keys(result.ungrouped).length;
+    if (numTabs !== 0) {
+      chrome.storage.local.set({ [currentTime]: result.ungrouped });
+      chrome.storage.local.set({ ungrouped: {} }); // remove()メソッドを使うとキーごとなくなってしまうので空オブジェクトをセットした。なくなっても存在しないキーにアクセスしてもundefinedが出てきてNull合体代入で対応できるが。
+    }
+  });
+  chrome.tabs.create({ url: "/src/tinder/tinder.html" }); //絶対パスだった
 });
 
 chrome.tabs.onUpdated.addListener((tabId: number, changeInfo: chrome.tabs.TabChangeInfo, tab : chrome.tabs.Tab) => {
@@ -23,7 +27,6 @@ chrome.tabs.onUpdated.addListener((tabId: number, changeInfo: chrome.tabs.TabCha
       tabData.screenShot = imageURl;
       // グループ化してないタブの一覧に追加する 
       // タブIDをキーにしているので同じタブでリンク移動したら上書きすることで最新情報を保てる
-      // "ungrouped"{ (tabのID): { ...(tabの情報)...}, (tabのID): { ...(tabの情報)... } }
       chrome.storage.local.get("ungrouped", (result) => {
         let currentTabs = result.ungrouped ?? {};
         currentTabs[tabId] = tabData;
