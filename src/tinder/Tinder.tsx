@@ -1,12 +1,37 @@
+import { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
-import { ChakraProvider } from "@chakra-ui/react";
-import History from './components/History';
+import { Box, ChakraProvider } from "@chakra-ui/react";
+import HistoryList from './components/HistoryList';
+import HistoryHeader from "./components/HistoryHeader";
 
 function Tinder() {
+  interface TabData {
+    aspect: number;
+    favicon: string;
+    id: number;
+    title: string;
+    lastseen: string;
+    screenShot: string;
+    url: string;
+  }
+
+  interface TabsStorage {
+    [key: string]: TabData;
+  }
+
+  const [tabsData, setTabsData] = useState<TabsStorage>({});
+
+  // 初回ロードのみ
+  useEffect(() => {
+    chrome.storage.local.get(null, (result) => {
+      setTabsData(result as TabsStorage);
+    });
+  }, []);  
+
   return (
     <>
-      
-      <History />
+      <HistoryHeader tabsData={tabsData} />
+      <HistoryList tabsData={tabsData} />
     </>
   );
 }
