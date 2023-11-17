@@ -6,9 +6,10 @@ interface HistoryHeaderProps {
   tabsData: TabData[];
   timeStamp: string;
   onTabDelete: () => void;
+  onRestoreTabs: () => void;
 }
 
-const HistoryHeader: React.FC<HistoryHeaderProps> = ({ tabsData, timeStamp, onTabDelete }) => {
+const HistoryHeader: React.FC<HistoryHeaderProps> = ({ tabsData, timeStamp, onTabDelete, onRestoreTabs }) => {
   const numTabs = Object.keys(tabsData).length;
   const date = new Date(Number(timeStamp))
   const createdAt = date.toLocaleString()
@@ -25,8 +26,11 @@ const HistoryHeader: React.FC<HistoryHeaderProps> = ({ tabsData, timeStamp, onTa
           <Text color='gray.500'>作成日 : {createdAt}</Text>
         </HStack>
         <HStack>
-          <Text color='green.300'>全て復元する</Text>
-          <Text color='red.300' cursor='pointer' onClick={onTabDelete}>
+          <Text color='green.300' cursor='pointer' onClick={(e) => {
+            e.stopPropagation();
+            onRestoreTabs();
+            onTabDelete();
+          }}>全て復元する</Text>
             全て削除する
           </Text>
         </HStack>
