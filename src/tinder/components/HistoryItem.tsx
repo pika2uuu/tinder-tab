@@ -20,7 +20,7 @@ const HistoryItem: React.FC<HistoryItemProps> = ({ tabData }) => {
           <Image src={tabData.favicon} borderRadius='full' boxSize='20px' fallbackSrc='https://cdn-icons-png.flaticon.com/512/1011/1011322.png ' />
         </Box>
         <Box w='250px'>
-          <Link href={tabData.url} isExternal color='#0000EE'>
+          <Link href={tabData.url} isExternal>
             {tabData.title} <ExternalLinkIcon mx='2px' />
           </Link>
         </Box>

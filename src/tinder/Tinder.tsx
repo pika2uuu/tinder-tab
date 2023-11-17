@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
-import { ChakraProvider } from "@chakra-ui/react";
+import { ChakraProvider, Divider } from "@chakra-ui/react";
 import HistoryGroup from "./components/HistoryGroup";
 import { HistoryGroups } from "../types/historyGroups"
-
+import Header from "./components/Header";
+import customTheme from "../themes/extendTheme";
 
 function Tinder() {
   const [historyGroups, setHistoryGroups] = useState<HistoryGroups>({});
@@ -17,6 +18,8 @@ function Tinder() {
 
   return (
     <>
+      <Header />
+      <Divider />
       {Object.entries(historyGroups).map(([key, group]) => (
         <HistoryGroup key={key} historyGroup={group} />
       ))}
@@ -27,7 +30,7 @@ function Tinder() {
 const rootElement = document.getElementById("root") as HTMLElement;
 const root = createRoot(rootElement);
 root.render(
-  <ChakraProvider>
+  <ChakraProvider theme={customTheme}>
     <Tinder />
   </ChakraProvider>
 );
