@@ -1,24 +1,25 @@
 import { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { ChakraProvider } from "@chakra-ui/react";
-import HistoryList from './components/HistoryList';
-import HistoryHeader from "./components/HistoryHeader";
+import HistoryGroup from "./components/HistoryGroup";
 import { HistoryGroups } from "../types/historyGroups"
 
 
-  const [tabsData, setTabsData] = useState<TabsStorage>({});
+function Tinder() {
+  const [historyGroups, setHistoryGroups] = useState<HistoryGroups>({});
 
   // 初回ロードのみ
   useEffect(() => {
     chrome.storage.local.get(null, (result) => {
-      setTabsData(result as TabsStorage);
+      setHistoryGroups(result as HistoryGroups);
     });
   }, []);  
 
   return (
     <>
-      <HistoryHeader tabsData={tabsData} />
-      <HistoryList tabsData={tabsData} />
+      {Object.entries(historyGroups).map(([key, group]) => (
+        <HistoryGroup key={key} historyGroup={group} />
+      ))}
     </>
   );
 }
