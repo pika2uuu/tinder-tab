@@ -5,7 +5,7 @@ chrome.action.onClicked.addListener(() => {
     const numTabs = Object.keys(result.ungrouped).length;
     if (numTabs !== 0) {
       chrome.storage.local.set({ [currentTime]: result.ungrouped });
-      chrome.storage.local.set({ ungrouped: {} }); // remove()メソッドを使うとキーごとなくなってしまうので空オブジェクトをセットした。なくなっても存在しないキーにアクセスしてもundefinedが出てきてNull合体代入で対応できるが。
+      chrome.storage.local.remove("ungrouped"); // remove()メソッドを使うとキーごとなくなってしまうがNull合併代入してるのでもんだいない。別の箇所でもこのキーがない方が簡潔にかける。
     }
   });
   chrome.tabs.create({ url: "/src/tinder/tinder.html" }); //絶対パスだった
