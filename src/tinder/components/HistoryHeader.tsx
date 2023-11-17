@@ -2,12 +2,8 @@ import React from "react";
 import { HStack, VStack, Center, Text } from "@chakra-ui/react";
 import { TabData } from "../../types/tabData";
 
-interface TabsStorage {
-  [key: string]: TabData;
-}
-
 interface HistoryHeaderProps {
-  tabsData: TabsStorage;
+  tabsData: TabData[];
   timeStamp: string;
 }
 
