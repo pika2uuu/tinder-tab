@@ -27,7 +27,10 @@ const HistoryItem: React.FC<HistoryItemProps> = ({ tabData, onDelete }) => {
           <Image src={tabData.favicon} borderRadius='full' boxSize='20px' fallbackSrc='https://cdn-icons-png.flaticon.com/512/1011/1011322.png ' />
         </Box>
         <Box w='250px'>
-          <Link href={tabData.url} isExternal color={"#2865aa"}>
+          <Link href={tabData.url} isExternal color={"#2865aa"} onClick={(e) => {
+            e.stopPropagation();
+            onDelete();
+          }}>
             {tabData.title} <ExternalLinkIcon mx='2px' />
           </Link>
         </Box>
