@@ -14,17 +14,19 @@ const HistoryHeader: React.FC<HistoryHeaderProps> = ({ tabsData }) => {
   const numTabs = Object.keys(tabsData).length;
 
   return (
-    <HStack>
+    <HStack marginBottom="3" spacing="10">
       <Center>
-        <Text fontSize='4xl'>{numTabs}個のタブ</Text>
+        <Text fontSize='3xl' color='gray.500'>
+          {numTabs}個のタブ
+        </Text>
       </Center>
       <VStack>
         <HStack>
-          <Text>作成日</Text>
+          <Text color='gray.500'>作成日</Text>
         </HStack>
         <HStack>
-          <Text>全て復元する</Text>
-          <Text>全て削除する</Text>
+          <Text color='green.300'>全て復元する</Text>
+          <Text color='red.300'>全て削除する</Text>
         </HStack>
       </VStack>
     </HStack>

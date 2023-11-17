@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
-import { ChakraProvider, Divider } from "@chakra-ui/react";
+import { Box, ChakraProvider, Divider, VStack } from "@chakra-ui/react";
 import HistoryGroup from "./components/HistoryGroup";
 import { HistoryGroups } from "../types/historyGroups"
 import Header from "./components/Header";
@@ -20,9 +20,13 @@ function Tinder() {
     <>
       <Header />
       <Divider />
-      {Object.entries(historyGroups).map(([key, group]) => (
-        <HistoryGroup key={key} historyGroup={group} />
-      ))}
+      <VStack spacing='10' align='start' marginLeft='10'>
+        {Object.entries(historyGroups).map(([key, group]) => (
+          <Box key={key}>
+            <HistoryGroup historyGroup={group} />
+          </Box>
+        ))}
+      </VStack>
     </>
   );
 }

@@ -5,14 +5,6 @@ const customTheme = extendTheme({
     global: {
       "html, body": {
         backgroundColor: "#343440",
-        color: "white",
-      },
-    },
-    components: {
-      Link: {
-        baseStyle: {
-          color: "#2865aa",
-        },
       },
     },
   },
