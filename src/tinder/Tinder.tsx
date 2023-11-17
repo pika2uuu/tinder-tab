@@ -20,10 +20,10 @@ function Tinder() {
     <>
       <Header />
       <Divider />
-      <VStack spacing='10' align='start' marginLeft='10'>
+      <VStack spacing='10' align='start' marginLeft='10' marginTop='10'>
         {Object.entries(historyGroups).map(([key, group]) => (
           <Box key={key}>
-            <HistoryGroup historyGroup={group} />
+            <HistoryGroup historyGroup={group} timeStamp={key} />
           </Box>
         ))}
       </VStack>

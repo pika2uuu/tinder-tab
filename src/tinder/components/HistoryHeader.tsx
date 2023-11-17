@@ -8,10 +8,13 @@ interface TabsStorage {
 
 interface HistoryHeaderProps {
   tabsData: TabsStorage;
+  timeStamp: string;
 }
 
-const HistoryHeader: React.FC<HistoryHeaderProps> = ({ tabsData }) => {
+const HistoryHeader: React.FC<HistoryHeaderProps> = ({ tabsData, timeStamp }) => {
   const numTabs = Object.keys(tabsData).length;
+  const date = new Date(Number(timeStamp))
+  const createdAt = date.toLocaleString()
 
   return (
     <HStack marginBottom="3" spacing="10">
@@ -22,7 +25,7 @@ const HistoryHeader: React.FC<HistoryHeaderProps> = ({ tabsData }) => {
       </Center>
       <VStack>
         <HStack>
-          <Text color='gray.500'>作成日</Text>
+          <Text color='gray.500'>作成日 : { createdAt }</Text>
         </HStack>
         <HStack>
           <Text color='green.300'>全て復元する</Text>
