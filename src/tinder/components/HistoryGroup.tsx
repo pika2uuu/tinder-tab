@@ -17,7 +17,7 @@ export default function HistoryGroups(props: HistoryGroupsProps) {
     <>
       {tabs.length > 0 && (
         <>
-          <HistoryHeader tabsData={tabs} timeStamp={props.timeStamp} />
+          <HistoryHeader tabsData={tabs} timeStamp={props.timeStamp} onTabDelete={props.onTabDelete} />
           <HistoryList tabsData={tabs} setTabs={setTabs} timeStamp={props.timeStamp} onTabDelete={props.onTabDelete} />
         </>
       )}
