@@ -3,21 +3,8 @@ import { createRoot } from "react-dom/client";
 import { ChakraProvider } from "@chakra-ui/react";
 import HistoryList from './components/HistoryList';
 import HistoryHeader from "./components/HistoryHeader";
+import { HistoryGroups } from "../types/historyGroups"
 
-function Tinder() {
-  interface TabData {
-    aspect: number;
-    favicon: string;
-    id: number;
-    title: string;
-    lastseen: string;
-    screenShot: string;
-    url: string;
-  }
-
-  interface TabsStorage {
-    [key: string]: TabData;
-  }
 
   const [tabsData, setTabsData] = useState<TabsStorage>({});
 
