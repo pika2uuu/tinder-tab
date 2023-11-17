@@ -1,6 +1,6 @@
 import React from "react";
-import { Box, HStack, Text, Image, Link } from "@chakra-ui/react";
-import { ExternalLinkIcon } from "@chakra-ui/icons";
+import { Box, HStack, Text, Image, Link, Center } from "@chakra-ui/react";
+import { DeleteIcon, ExternalLinkIcon } from "@chakra-ui/icons";
 import * as moment from "moment-timezone";
 import { TabData } from "../../types/tabData";
 
@@ -15,7 +15,10 @@ const HistoryItem: React.FC<HistoryItemProps> = ({ tabData }) => {
 
   return (
     <>
-      <HStack spacing='5px'>
+      <HStack spacing='5px' _hover={{ ".delete-icon": { visibility: "visible" } }}>
+        <Center w='20x' marginRight='3px' className='delete-icon' visibility='hidden'>
+          <DeleteIcon color='red.300' cursor='pointer' boxSize={4} />
+        </Center>
         <Box w='20px'>
           <Image src={tabData.favicon} borderRadius='full' boxSize='20px' fallbackSrc='https://cdn-icons-png.flaticon.com/512/1011/1011322.png ' />
         </Box>
