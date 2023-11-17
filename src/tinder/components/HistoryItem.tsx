@@ -6,9 +6,10 @@ import { TabData } from "../../types/tabData";
 
 interface HistoryItemProps {
   tabData: TabData;
+  onDelete: () => void;
 }
 
-const HistoryItem: React.FC<HistoryItemProps> = ({ tabData }) => {
+const HistoryItem: React.FC<HistoryItemProps> = ({ tabData, onDelete }) => {
   const lastseen = moment(tabData.lastseen);
   lastseen.locale("ja");
   const fromNow = lastseen.fromNow();
@@ -17,7 +18,10 @@ const HistoryItem: React.FC<HistoryItemProps> = ({ tabData }) => {
     <>
       <HStack spacing='5px' _hover={{ ".delete-icon": { visibility: "visible" } }}>
         <Center w='20x' marginRight='3px' className='delete-icon' visibility='hidden'>
-          <DeleteIcon color='red.300' cursor='pointer' boxSize={4} />
+          <DeleteIcon color='red.300' cursor='pointer' boxSize={4} onClick={(e) => {
+            e.stopPropagation();
+            onDelete();
+          }} />
         </Center>
         <Box w='20px'>
           <Image src={tabData.favicon} borderRadius='full' boxSize='20px' fallbackSrc='https://cdn-icons-png.flaticon.com/512/1011/1011322.png ' />

@@ -11,7 +11,7 @@ export default function HistoryGroups(props: HistoryGroupsProps) {
   return (
     <>
       <HistoryHeader tabsData={props.historyGroup} timeStamp={props.timeStamp} />
-      <HistoryList tabsData={props.historyGroup} />
+      <HistoryList tabsData={props.historyGroup} timeStamp={props.timeStamp} />
     </>
   );
 }
