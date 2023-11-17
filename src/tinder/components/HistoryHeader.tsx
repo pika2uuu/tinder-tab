@@ -31,6 +31,10 @@ const HistoryHeader: React.FC<HistoryHeaderProps> = ({ tabsData, timeStamp, onTa
             onRestoreTabs();
             onTabDelete();
           }}>全て復元する</Text>
+          <Text color='red.300' cursor='pointer' onClick={(e) => {
+            e.stopPropagation();
+            onTabDelete();
+          }}>
             全て削除する
           </Text>
         </HStack>
