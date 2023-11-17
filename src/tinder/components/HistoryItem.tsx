@@ -1,25 +1,18 @@
+import React from "react";
 import { Box, HStack, Text, Image, Link } from "@chakra-ui/react";
 import { ExternalLinkIcon } from "@chakra-ui/icons";
 import * as moment from "moment-timezone";
-
-interface TabData {
-  aspect: number;
-  favicon: string;
-  id: number;
-  title: string;
-  lastseen: string;
-  screenShot: string;
-  url: string;
-}
+import { TabData } from "../../types/tabData";
 
 interface HistoryItemProps {
   tabData: TabData;
 }
 
-export default function HistoryItem({ tabData }: HistoryItemProps) {
+const HistoryItem: React.FC<HistoryItemProps> = ({ tabData }) => {
   const lastseen = moment(tabData.lastseen);
-  lastseen.locale('ja');
+  lastseen.locale("ja");
   const fromNow = lastseen.fromNow();
+
   return (
     <>
       <HStack spacing='5px'>
@@ -37,4 +30,6 @@ export default function HistoryItem({ tabData }: HistoryItemProps) {
       </HStack>
     </>
   );
-}
+};
+
+export default HistoryItem;

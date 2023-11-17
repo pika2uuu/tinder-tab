@@ -1,21 +1,17 @@
+import React from "react";
 import { VStack } from "@chakra-ui/react";
 import HistoryItem from "./HistoryItem";
-
-interface TabData {
-  aspect: number;
-  favicon: string;
-  id: number;
-  title: string;
-  lastseen: string;
-  screenShot: string;
-  url: string;
-}
+import { TabData } from "../../types/tabData";
 
 interface TabsStorage {
   [key: string]: TabData;
 }
 
-export default function History({ tabsData }: { tabsData: TabsStorage }) {
+interface HistoryProps {
+  tabsData: TabsStorage;
+}
+
+const History: React.FC<HistoryProps> = ({ tabsData }) => {
   return (
     <>
       <VStack spacing='3' align='start'>
@@ -25,4 +21,6 @@ export default function History({ tabsData }: { tabsData: TabsStorage }) {
       </VStack>
     </>
   );
-}
+};
+
+export default History;
