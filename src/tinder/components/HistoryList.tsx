@@ -7,9 +7,10 @@ interface HistoryProps {
   tabsData: TabData[];
   setTabs: React.Dispatch<React.SetStateAction<TabData[]>>;
   timeStamp: string;
+  onTabDelete: () => void;
 }
 
-const HistoryList: React.FC<HistoryProps> = ({ tabsData, setTabs, timeStamp }) => {
+const HistoryList: React.FC<HistoryProps> = ({ tabsData, setTabs, timeStamp, onTabDelete }) => {
 const handleDelete = (tabId: number) => {
   const updatedTabs = tabsData.filter((tab) => tab.id !== tabId);
   if (updatedTabs.length > 0) {
@@ -22,6 +23,7 @@ const handleDelete = (tabId: number) => {
     // タブが空になった場合は、そのタイムスタンプのデータを削除
     chrome.storage.local.remove(timeStamp, () => {
       setTabs([]);
+      onTabDelete();
       console.log("Storage cleared for timestamp", timeStamp);
     });
   }

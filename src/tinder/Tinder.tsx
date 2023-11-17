@@ -16,6 +16,12 @@ function Tinder() {
     });
   }, []);  
 
+  const handleTabDelete = (timeStamp: string) => {
+    const updatedGroups = { ...historyGroups };
+    delete updatedGroups[timeStamp]; // タイムスタンプに対応するグループを削除
+    setHistoryGroups(updatedGroups);
+  };
+
   return (
     <>
       <Header />
@@ -23,7 +29,7 @@ function Tinder() {
       <VStack spacing='10' align='start' marginLeft='10' marginTop='10'>
         {Object.entries(historyGroups).map(([key, group]) => (
           <Box key={key}>
-            <HistoryGroup historyGroup={group} timeStamp={key} />
+            <HistoryGroup historyGroup={group} timeStamp={key} onTabDelete={() => handleTabDelete(key)} />
           </Box>
         ))}
       </VStack>

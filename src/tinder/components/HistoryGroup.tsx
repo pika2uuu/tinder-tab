@@ -6,6 +6,7 @@ import { TabData } from "../../types/tabData";
 interface HistoryGroupsProps {
   historyGroup: { [key: string]: TabData };
   timeStamp: string;
+  onTabDelete: () => void;
 }
 
 export default function HistoryGroups(props: HistoryGroupsProps) {
@@ -17,7 +18,7 @@ export default function HistoryGroups(props: HistoryGroupsProps) {
       {tabs.length > 0 && (
         <>
           <HistoryHeader tabsData={tabs} timeStamp={props.timeStamp} />
-          <HistoryList tabsData={tabs} setTabs={setTabs} timeStamp={props.timeStamp} />
+          <HistoryList tabsData={tabs} setTabs={setTabs} timeStamp={props.timeStamp} onTabDelete={props.onTabDelete} />
         </>
       )}
     </>
