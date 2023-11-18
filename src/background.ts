@@ -6,9 +6,9 @@ chrome.action.onClicked.addListener(() => {
     if (numTabs !== 0) {
       chrome.storage.local.set({ [currentTime]: result.ungrouped });
       chrome.storage.local.remove("ungrouped"); // remove()メソッドを使うとキーごとなくなってしまうがNull合併代入してるのでもんだいない。別の箇所でもこのキーがない方が簡潔にかける。
+      chrome.tabs.create({ url: "/src/tinder/tinder.html" }); //絶対パスで指定
     }
   });
-  chrome.tabs.create({ url: "/src/tinder/tinder.html" }); //絶対パスだった
 });
 
 chrome.tabs.onUpdated.addListener((tabId: number, changeInfo: chrome.tabs.TabChangeInfo, tab : chrome.tabs.Tab) => {
