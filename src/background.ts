@@ -36,9 +36,25 @@ chrome.action.onClicked.addListener(() => {
     // タブが0のときは保存しない
     const numTabs = Object.keys(result.ungrouped).length;
     if (numTabs !== 0) {
-      chrome.storage.local.set({ [currentTime]: result.ungrouped });
-      chrome.storage.local.remove("ungrouped"); // remove()メソッドを使うとキーごとなくなってしまうがNull合併代入してるのでもんだいない。別の箇所でもこのキーがない方が簡潔にかける。
-      chrome.tabs.create({ url: "/src/tinder/tinder.html" }); //絶対パスで指定
+      chrome.storage.local.set({ [currentTime]: result.ungrouped }, () => {
+        // 現在の 'ungrouped' タブを保存した後、それらを削除
+        Object.keys(result.ungrouped).forEach((tabId) => {
+          chrome.tabs.remove(parseInt(tabId), () => {
+            if (chrome.runtime.lastError) {
+              console.error("タブの削除に失敗しました: ", chrome.runtime.lastError);
+            }
+          });
+        });
+
+        // 'ungrouped' キーを削除
+        chrome.storage.local.remove("ungrouped", () => {
+          if (chrome.runtime.lastError) {
+            console.error("削除に失敗しました: ", chrome.runtime.lastError);
+          }
+        });
+
+        chrome.tabs.create({ url: "/src/tinder/tinder.html" }); //絶対パスで指定
+      });
     }
   });
 });
