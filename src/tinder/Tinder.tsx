@@ -12,6 +12,7 @@ function Tinder() {
   // 初回ロードのみ
   useEffect(() => {
     chrome.storage.local.get(null, (result) => {
+      delete result.ungrouped;
       setHistoryGroups(result as HistoryGroups);
     });
   }, []);  
