@@ -18,8 +18,10 @@ function Tinder() {
 
   const handleTabDelete = (timeStamp: string) => {
     const updatedGroups = { ...historyGroups };
-    delete updatedGroups[timeStamp]; // タイムスタンプに対応するグループを削除
-    setHistoryGroups(updatedGroups);
+    delete updatedGroups[timeStamp];
+    chrome.storage.local.remove(timeStamp, () => {
+      setHistoryGroups(updatedGroups);
+    });
   };
 
   return (
