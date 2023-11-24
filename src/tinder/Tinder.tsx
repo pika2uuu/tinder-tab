@@ -26,7 +26,7 @@ function Tinder() {
   };
 
   const HistoryGroupsTmp = Object.entries(historyGroups);
-  const HistoryGroupsByNewOrder = [...HistoryGroupsTmp].reverse(); // 新しい
+  const HistoryGroupsByNewOrder = [...HistoryGroupsTmp].reverse(); // 新しい順に表示するため逆順にした配列を作成
 
   return (
     <>
