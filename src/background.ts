@@ -37,13 +37,27 @@ chrome.action.onClicked.addListener(() => {
     const numTabs = Object.keys(result.ungrouped).length;
     if (numTabs !== 0) {
       chrome.storage.local.set({ [currentTime]: result.ungrouped }, () => {
-        // 現在の 'ungrouped' タブを保存した後、それらを削除
-        Object.keys(result.ungrouped).forEach((tabId) => {
-          chrome.tabs.remove(parseInt(tabId), () => {
-            if (chrome.runtime.lastError) {
-              console.error("タブの削除に失敗しました: ", chrome.runtime.lastError);
+        // Tinderタブを開いておく
+        let tinderTabId;
+        chrome.tabs.create({
+          url: "/src/tinder/tinder.html", //絶対パスで指定
+          pinned: true,
+        }, (newTab) => {
+          chrome.storage.local.set({ tindertab: newTab.id });
+          tinderTabId = newTab.id
+        });
+        // Tinderタブ以外のタブを閉じる
+        chrome.tabs.query({}, (tabs) => {
+          for (const tab of tabs) {
+            if (tab.id === tinderTabId!) {
+              continue;
             }
-          });
+            chrome.tabs.remove(tab.id!, () => {
+              if (chrome.runtime.lastError) {
+                console.error("タブの削除に失敗しました: ", chrome.runtime.lastError);
+              }
+            });  
+          }
         });
 
         // 'ungrouped' キーを削除
@@ -52,8 +66,6 @@ chrome.action.onClicked.addListener(() => {
             console.error("削除に失敗しました: ", chrome.runtime.lastError);
           }
         });
-
-        chrome.tabs.create({ url: "/src/tinder/tinder.html" }); //絶対パスで指定
       });
     }
   });
