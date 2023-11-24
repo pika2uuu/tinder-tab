@@ -1,3 +1,5 @@
+// 何を保存するタブ(ungrouped)として決めるかによって処理が変わってくる。ブラウザの差異とcaptureできるurlを見極めねば
+
 // インストール時にすべてのタブ情報を取得
 chrome.runtime.onInstalled.addListener(({ reason }) => {
   if (reason === "install") {
@@ -79,6 +81,9 @@ chrome.tabs.onUpdated.addListener((tabId: number, changeInfo: chrome.tabs.TabCha
     const tabData = { id: tabId, title: tab.title, url: tab.url, favicon: tab.favIconUrl, aspect: aspect, lastseen: currentDate, screenShot: "" };
 
     // 新しいタブを開いたときにスクショを撮ると発生するエラー対策のアーリーリターン エラー名:Unchecked runtime.lastError: The 'activeTab' permission is not in effect because this extension has not been in invoked.
+    // 新しいタブとTinderタブ保存しても意味がないので保存しない(ungrouped に入れない)
+    // chrome:// のURLはブラウザによって差異があるので全て保存する方針で
+    // 新しいタブや chrome:// のをクリックしても開かないのでhttp系しか保存しないことにした
     if (!tab.url || !(tab.url.startsWith("http://") || tab.url.startsWith("https://"))) {
       return;
     }
