@@ -25,12 +25,15 @@ function Tinder() {
     });
   };
 
+  const HistoryGroupsTmp = Object.entries(historyGroups);
+  const HistoryGroupsByNewOrder = [...HistoryGroupsTmp].reverse(); // 新しい
+
   return (
     <>
       <Header />
       <Divider />
       <VStack spacing='10' align='start' marginLeft='10' marginTop='10'>
-        {Object.entries(historyGroups).map(([key, group]) => (
+        {HistoryGroupsByNewOrder.map(([key, group]) => (
           <Box key={key}>
             <HistoryGroup historyGroup={group} timeStamp={key} onTabDelete={() => handleTabDelete(key)} />
           </Box>
