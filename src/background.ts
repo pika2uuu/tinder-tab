@@ -112,3 +112,22 @@ chrome.tabs.onRemoved.addListener((tabId: number) => {
     }
   });
 });
+
+chrome.windows.onCreated.addListener((newWindow) => {
+  // 新しいウィンドウの初期アクティブタブを取得
+  chrome.tabs.query({ windowId: newWindow.id, active: true }, (initialTabs) => {
+    if (initialTabs.length > 0) {
+      const initialActiveTabId = initialTabs[0].id;
+
+      // 'tinder.html' のタブを開く
+      chrome.tabs.create({
+        url: "/src/tinder/tinder.html",
+        pinned: true,
+        windowId: newWindow.id,
+      });
+
+      // 元のアクティブタブにフォーカスを戻す。この処理をしなければ tinder.html にフォーカスがされてしまう。
+      chrome.tabs.update(initialActiveTabId!, { active: true });
+    }
+  });
+});
